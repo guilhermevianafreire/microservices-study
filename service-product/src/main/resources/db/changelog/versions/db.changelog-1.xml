@@ -26,19 +26,19 @@
 			</column>
 			<!-- AUDIT COLUMNS -->
 			<column name="created_date" type="TIMESTAMP">
-				<constraints nullable="false" />
+				<constraints nullable="true" />
 			</column>
 
 			<column name="created_by" type="VARCHAR">
-				<constraints nullable="false" />
+				<constraints nullable="true" />
 			</column>
 
 			<column name="last_modified_date" type="TIMESTAMP">
-				<constraints nullable="false" />
+				<constraints nullable="true" />
 			</column>
 
 			<column name="last_modified_by" type="VARCHAR">
-				<constraints nullable="false" />
+				<constraints nullable="true" />
 			</column>
 			<!-- AUDIT COLUMNS -->
 		</createTable>
