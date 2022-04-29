@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+	
+	<property name="uuid_type" value="uuid" dbms="postgresql"/>
+	<property name="uuid_type" value="BINARY(16)" dbms="mysql"/>
+	
+	<property name="uuid_function" value="uid.uuid_generate_v4()" dbms="postgresql"/>
+	<property name="uuid_function" value="UUID_TO_BIN(UUID())" dbms="mysql"/>
+	
+	<include file="versions/db.changelog-1.xml"
+		relativeToChangelogFile="true" />
+
+</databaseChangeLog>
