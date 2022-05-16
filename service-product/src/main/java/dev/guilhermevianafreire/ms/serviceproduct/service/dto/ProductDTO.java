@@ -9,28 +9,16 @@ import javax.validation.constraints.Size;
 
 import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
 import lombok.Builder;
-import lombok.Data;
 
-@Data
 @Builder
-public class ProductDTO {
-	
-	public UUID id;
-	
-	@NotBlank
-	@Size(max = 100)
-	private String name;
-	
-	private String description;
-	
-	@NotNull
-	public StatusType status;
-	
-	public Instant createdDate;
-	
-	public String createdBy;
-	
-	public Instant lastModifiedDate;
+public record ProductDTO(
+                         UUID id,
+                         @NotBlank @Size(max = 100) String name,
+                         String description,
+                         @NotNull StatusType status,
+                         Instant createdDate,
+                         String createdBy,
+                         Instant lastModifiedDate,
+                         String lastModifiedBy) {
 
-	public String lastModifiedBy;
 }
