@@ -13,21 +13,23 @@ import dev.guilhermevianafreire.ms.serviceproduct.service.dto.ProductDTO;
 
 @Mapper
 public interface ProductMapper {
-	
-	Product toEntity(ProductDTO dto);
 
-	ProductDTO toDto(Product entity);
+  Product toEntity(ProductDTO dto);
 
-    List<Product> toEntity(List<ProductDTO> dtoList);
+  ProductDTO toDto(Product entity);
 
-    List<ProductDTO> toDto(List<Product> entityList);
+  List<Product> toEntity(List<ProductDTO> dtoList);
+  
+  List<ProductDTO> toDto(List<Product> entityList);
 
-    @Named("partialUpdate")
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void partialUpdate(@MappingTarget Product destination, Product origin);
-    
-    @Named("partialUpdateDto")
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    void partialUpdateDto(@MappingTarget Product entity, ProductDTO dto);
+  @Named("partialUpdate")
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void partialUpdate(@MappingTarget Product destination,
+                     Product origin);
+
+  @Named("partialUpdateDto")
+  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  void partialUpdateDto(@MappingTarget Product entity,
+                        ProductDTO dto);
 
 }

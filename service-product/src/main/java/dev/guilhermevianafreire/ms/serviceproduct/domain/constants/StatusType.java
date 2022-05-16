@@ -10,12 +10,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum StatusType {
 
-	INACTIVE(0), ACTIVE(1);
+  INACTIVE(0),
+  ACTIVE(1);
 
-	private final Integer code;
+  private final Integer code;
 
-	public static Optional<StatusType> lookupByCode(Integer code) {
-		return Stream.of(StatusType.values()).filter(constant -> constant.getCode().equals(code)).findFirst();
-	}
+  public static Optional<StatusType> lookupByCode(Integer code) {
+    return Stream.of(StatusType.values()).filter(constant -> constant.getCode().equals(code)).findFirst();
+  }
 
 }

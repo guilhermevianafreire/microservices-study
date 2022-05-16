@@ -19,14 +19,14 @@ import lombok.Setter;
 @Entity
 @Table(name = "product")
 public class Product extends BaseEntity {
-	
-	@NotBlank
-	@Size(max = 100)
-	@Column(name = "name", length = 100, nullable = false, unique = true)
-	private String name;
-	
-	@Lob
-	@Column(name = "description")
-	private String description;
-	
+
+  @NotBlank
+  @Size(max = 100)
+  @Column(name = "name", length = 100, nullable = false, unique = true)
+  private String name;
+
+  @Lob
+  @Column(name = "description")
+  private String description;
+
 }

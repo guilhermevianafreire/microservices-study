@@ -24,36 +24,29 @@ import lombok.Setter;
 @AllArgsConstructor
 @MappedSuperclass
 public class BaseEntity {
-	
-	@Id
-	@GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = {
-                    @Parameter(
-                            name = "uuid_gen_strategy_class",
-                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
-                    )
-            }
-    )
-	@Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
-	public UUID id;
-	
-	@NotNull
-	@Column(name = "status", columnDefinition = "SMALINT", nullable = false)
-	public StatusType status;
-	
-	@Column(name = "created_date", columnDefinition = "TIMESTAMP", updatable = false)
-	public Instant createdDate;
-	
-	@Column(name = "created_by", updatable = false)
-	public String createdBy;
-	
-	@Column(name = "last_modified_date", columnDefinition = "TIMESTAMP")
-	public Instant lastModifiedDate;
 
-	@Column(name = "last_modified_by", updatable = false)
-	public String lastModifiedBy;
-	
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator", parameters = {
+                                                                                               @Parameter(name = "uuid_gen_strategy_class", value = "org.hibernate.id.uuid.CustomVersionOneStrategy")
+  })
+  @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
+  public UUID id;
+
+  @NotNull
+  @Column(name = "status", columnDefinition = "SMALINT", nullable = false)
+  public StatusType status;
+
+  @Column(name = "created_date", columnDefinition = "TIMESTAMP", updatable = false)
+  public Instant createdDate;
+
+  @Column(name = "created_by", updatable = false)
+  public String createdBy;
+
+  @Column(name = "last_modified_date", columnDefinition = "TIMESTAMP")
+  public Instant lastModifiedDate;
+
+  @Column(name = "last_modified_by", updatable = false)
+  public String lastModifiedBy;
+
 }
