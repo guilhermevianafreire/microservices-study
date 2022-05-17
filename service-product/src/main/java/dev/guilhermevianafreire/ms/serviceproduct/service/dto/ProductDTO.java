@@ -5,14 +5,17 @@ import java.util.UUID;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 import lombok.Builder;
 
 @Builder
 public record ProductDTO(
-                         @NotNull(groups = {
-                                             ProductUpdateGroup.class
+                         @Null(groups = {
+                                          ProductSaveGroup.class
+                         }) @NotNull(groups = {
+                                                ProductUpdateGroup.class
                          }) UUID id,
                          @NotBlank(groups = {
                                               ProductSaveGroup.class,
