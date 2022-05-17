@@ -1,21 +1,13 @@
 package dev.guilhermevianafreire.ms.serviceproduct.controller;
 
-import java.util.UUID;
-
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import dev.guilhermevianafreire.ms.serviceproduct.dto.ProductDTO;
+import dev.guilhermevianafreire.ms.serviceproduct.dto.ProductFilterDTO;
 import dev.guilhermevianafreire.ms.serviceproduct.service.ProductService;
-import dev.guilhermevianafreire.ms.serviceproduct.service.dto.ProductDTO;
-import dev.guilhermevianafreire.ms.serviceproduct.service.dto.ProductFilterDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/product")
