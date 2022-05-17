@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import dev.guilhermevianafreire.ms.serviceproduct.domain.Product;
@@ -14,22 +14,28 @@ import dev.guilhermevianafreire.ms.serviceproduct.service.dto.ProductDTO;
 @Mapper
 public interface ProductMapper {
 
+  @Mapping(target = "status", expression = "java(StatusType.lookupByCode(dto.statusCode()).get())")
   Product toEntity(ProductDTO dto);
 
+  @Mapping(target = "statusCode", source = "status.code")
   ProductDTO toDto(Product entity);
 
   List<Product> toEntity(List<ProductDTO> dtoList);
-  
+
   List<ProductDTO> toDto(List<Product> entityList);
 
-  @Named("partialUpdate")
   @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   void partialUpdate(@MappingTarget Product destination,
                      Product origin);
 
-  @Named("partialUpdateDto")
-  @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-  void partialUpdateDto(@MappingTarget Product entity,
-                        ProductDTO dto);
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "createdBy", ignore = true)
+  @Mapping(target = "createdDate", ignore = true)
+  @Mapping(target = "lastModifiedBy", ignore = true)
+  @Mapping(target = "lastModifiedDate", ignore = true)
+  @Mapping(target = "status", expression = "java(StatusType.lookupByCode(dto.statusCode()).get())")
+  void updateEntityWithDto(@MappingTarget Product entity,
+                           ProductDTO dto);
+
 
 }
