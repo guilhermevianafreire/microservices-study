@@ -49,4 +49,11 @@ public class BaseEntity {
   @Column(name = "last_modified_by", updatable = false)
   public String lastModifiedBy;
 
+  public void changeStatus() {
+    if (StatusType.ACTIVE.equals(status))
+      status = StatusType.INACTIVE;
+    else
+      status = StatusType.ACTIVE;
+  }
+
 }
