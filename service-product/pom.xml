@@ -111,8 +111,8 @@
 
         <dependency>
             <groupId>dev.guilhermevianafreire.ms</groupId>
-            <artifactId>commons-client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>shared</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
