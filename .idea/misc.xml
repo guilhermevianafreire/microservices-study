@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/service-product/pom.xml" />
         <option value="$PROJECT_DIR$/commons-client/pom.xml" />
+        <option value="$PROJECT_DIR$/shared/pom.xml" />
       </list>
     </option>
   </component>

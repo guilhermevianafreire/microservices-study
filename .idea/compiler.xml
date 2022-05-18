@@ -7,7 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="commons-client" />
+        <module name="shared" />
       </profile>
       <profile name="Annotation profile for service-product" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -23,8 +23,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="commons-client" target="17" />
       <module name="service-product" target="17" />
+      <module name="shared" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
