@@ -1,7 +1,7 @@
 package dev.guilhermevianafreire.ms.serviceproduct.service.mapper;
 
 import dev.guilhermevianafreire.ms.serviceproduct.domain.Product;
-import dev.guilhermevianafreire.ms.serviceproduct.dto.ProductDTO;
+import dev.guilhermevianafreire.ms.shared.dto.product.ProductDTO;
 import org.mapstruct.*;
 
 import java.util.List;

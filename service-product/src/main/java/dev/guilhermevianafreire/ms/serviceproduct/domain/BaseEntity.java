@@ -9,10 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
+import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

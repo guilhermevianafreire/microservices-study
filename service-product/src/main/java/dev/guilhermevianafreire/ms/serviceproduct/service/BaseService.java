@@ -3,9 +3,8 @@ package dev.guilhermevianafreire.ms.serviceproduct.service;
 import java.text.MessageFormat;
 import java.util.UUID;
 
-import org.springframework.data.jpa.domain.Specification;
-
 import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
+import org.springframework.data.jpa.domain.Specification;
 
 public class BaseService<E> {
 

@@ -1,7 +1,7 @@
 package dev.guilhermevianafreire.ms.serviceproduct.controller;
 
-import dev.guilhermevianafreire.ms.serviceproduct.dto.ProductDTO;
-import dev.guilhermevianafreire.ms.serviceproduct.dto.ProductFilterDTO;
+import dev.guilhermevianafreire.ms.shared.dto.product.ProductDTO;
+import dev.guilhermevianafreire.ms.shared.dto.product.ProductFilterDTO;
 import dev.guilhermevianafreire.ms.serviceproduct.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
