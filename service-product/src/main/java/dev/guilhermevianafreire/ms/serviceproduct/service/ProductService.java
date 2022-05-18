@@ -5,9 +5,13 @@ import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
 import dev.guilhermevianafreire.ms.serviceproduct.repository.ProductRepository;
 import dev.guilhermevianafreire.ms.serviceproduct.service.mapper.ProductMapper;
 import dev.guilhermevianafreire.ms.serviceproduct.service.validation.ServiceValidationHelper;
+import dev.guilhermevianafreire.ms.shared.dto.audit.AuditDataDTO;
 import dev.guilhermevianafreire.ms.shared.dto.product.ProductDTO;
 import dev.guilhermevianafreire.ms.shared.dto.product.ProductFilterDTO;
+import dev.guilhermevianafreire.ms.shared.mapper.AuditMapper;
 import lombok.RequiredArgsConstructor;
+import org.javers.core.Javers;
+import org.javers.repository.jql.QueryBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,8 +30,10 @@ import java.util.UUID;
 @Transactional
 public class ProductService extends BaseService<Product> {
 
+    private final Javers javers;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final AuditMapper auditMapper;
     private final ServiceValidationHelper serviceValidation;
 
     @Transactional(readOnly = true)
@@ -44,6 +50,11 @@ public class ProductService extends BaseService<Product> {
     @Transactional(readOnly = true)
     public ProductDTO findProductById(@NotNull UUID id) {
         return productMapper.toDto(productRepository.getById(id));
+    }
+
+    public List<AuditDataDTO> getAllChangesById(UUID id) {
+        QueryBuilder queryBuilder = QueryBuilder.byInstanceId(id.toString(), Product.class);
+        return auditMapper.snapshotsToDtos(javers.findSnapshots(queryBuilder.build()));
     }
 
     public ProductDTO save(ProductDTO dto) {

@@ -37,18 +37,6 @@ public class BaseEntity {
   @Column(name = "status", columnDefinition = "SMALINT", nullable = false)
   public StatusType status;
 
-  @Column(name = "created_date", columnDefinition = "TIMESTAMP", updatable = false)
-  public Instant createdDate;
-
-  @Column(name = "created_by", updatable = false)
-  public String createdBy;
-
-  @Column(name = "last_modified_date", columnDefinition = "TIMESTAMP")
-  public Instant lastModifiedDate;
-
-  @Column(name = "last_modified_by", updatable = false)
-  public String lastModifiedBy;
-
   public void changeStatus() {
     if (StatusType.ACTIVE.equals(status))
       status = StatusType.INACTIVE;
