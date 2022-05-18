@@ -24,7 +24,7 @@
 
     <groupId>dev.guilhermevianafreire.ms</groupId>
     <artifactId>service-product</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>service-product</name>
     <description>Microservice for the product domain.</description>
     <properties>
@@ -36,6 +36,7 @@
         <maven.resources.encoding>${project.build.sourceEncoding}</maven.resources.encoding>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
+        <org.javers.version>6.6.5</org.javers.version>
     </properties>
     <dependencies>
         <!-- SPRING -->
@@ -46,6 +47,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,6 +77,14 @@
             <scope>test</scope>
         </dependency>
         <!-- SPRING -->
+
+        <!-- AUDITING -->
+        <dependency>
+            <groupId>org.javers</groupId>
+            <artifactId>javers-spring-boot-starter-mongo</artifactId>
+            <version>${org.javers.version}</version>
+        </dependency>
+        <!-- AUDITING -->
 
         <!-- DATABASE -->
         <dependency>
@@ -109,11 +122,13 @@
         </dependency>
         <!-- UTILS -->
 
+        <!-- INTERNAL -->
         <dependency>
             <groupId>dev.guilhermevianafreire.ms</groupId>
             <artifactId>shared</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.0.3-SNAPSHOT</version>
         </dependency>
+        <!-- INTERNAL -->
     </dependencies>
 
     <build>
