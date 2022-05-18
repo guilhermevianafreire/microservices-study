@@ -1,8 +1,5 @@
 package dev.guilhermevianafreire.ms.serviceproduct.constant;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 public enum ErrorMessageCode {
     HTTP_MESSAGE_NOT_READABLE,
     DATA_INTEGRITY_VIOLATION,

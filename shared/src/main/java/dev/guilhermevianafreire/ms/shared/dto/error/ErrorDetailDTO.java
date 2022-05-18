@@ -18,7 +18,8 @@ public record ErrorDetailDTO(String cause, String stackTrace) {
         String cause;
         String stackTrace;
 
-        private Builder() { }
+        private Builder() {
+        }
 
         public Builder cause(String cause) {
             this.cause = cause;

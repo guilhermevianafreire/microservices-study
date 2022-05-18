@@ -3,11 +3,11 @@ package dev.guilhermevianafreire.ms.shared.dto.error;
 import org.springframework.http.HttpStatus;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public record ErrorDTO(String errorCode, String errorMessage, int statusCode, String statusDescription, String path, List<ErrorDetailDTO> errorDetails, Instant errorDateTime) {
+public record ErrorDTO(String errorCode, String errorMessage, int statusCode, String statusDescription, String path,
+                       List<ErrorDetailDTO> errorDetails, Instant errorDateTime) {
 
     public ErrorDTO(Builder builder) {
         this(builder.errorCode, builder.errorMessage, builder.statusCode, builder.statusDescription, builder.path, builder.errorDetails, Instant.now());
@@ -26,7 +26,8 @@ public record ErrorDTO(String errorCode, String errorMessage, int statusCode, St
         String path;
         List<ErrorDetailDTO> errorDetails;
 
-        private Builder() { }
+        private Builder() {
+        }
 
         public Builder errorCode(String errorCode) {
             this.errorCode = errorCode;
