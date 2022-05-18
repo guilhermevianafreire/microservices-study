@@ -2,12 +2,11 @@ package dev.guilhermevianafreire.ms.serviceproduct.service;
 
 import dev.guilhermevianafreire.ms.serviceproduct.domain.Product;
 import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
-import dev.guilhermevianafreire.ms.serviceproduct.dto.ProductDTO;
-import dev.guilhermevianafreire.ms.serviceproduct.dto.ProductFilterDTO;
-import dev.guilhermevianafreire.ms.serviceproduct.exception.ExceptionHelper;
 import dev.guilhermevianafreire.ms.serviceproduct.repository.ProductRepository;
 import dev.guilhermevianafreire.ms.serviceproduct.service.mapper.ProductMapper;
 import dev.guilhermevianafreire.ms.serviceproduct.service.validation.ServiceValidationHelper;
+import dev.guilhermevianafreire.ms.shared.dto.product.ProductDTO;
+import dev.guilhermevianafreire.ms.shared.dto.product.ProductFilterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -31,7 +29,6 @@ public class ProductService extends BaseService<Product> {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ServiceValidationHelper serviceValidation;
-    private final ExceptionHelper exceptionBuilder;
 
     @Transactional(readOnly = true)
     public List<ProductDTO> listAll() {
@@ -45,13 +42,8 @@ public class ProductService extends BaseService<Product> {
     }
 
     @Transactional(readOnly = true)
-    public boolean productIdExists(@NotNull UUID id) {
-        return productRepository.existsById(id);
-    }
-
-    @Transactional(readOnly = true)
     public ProductDTO findProductById(@NotNull UUID id) {
-        return productMapper.toDto(findById(id).orElseThrow(() -> exceptionBuilder.buildEntityNotFoundException(id)));
+        return productMapper.toDto(productRepository.getById(id));
     }
 
     public ProductDTO save(ProductDTO dto) {
@@ -61,24 +53,19 @@ public class ProductService extends BaseService<Product> {
 
     public ProductDTO update(ProductDTO dto) {
         serviceValidation.validate(dto, ProductDTO.ProductUpdateGroup.class);
-        Product productEntity = findById(dto.id()).orElseThrow(() -> exceptionBuilder.buildEntityNotFoundException(dto.id()));
+        Product productEntity = productRepository.getById(dto.id());
         productMapper.updateEntityWithDto(productEntity, dto);
         return productMapper.toDto(productRepository.save(productEntity));
     }
 
     public ProductDTO changeStatusAndUpdate(@NotNull UUID id) {
-        Product productEntity = findById(id).orElseThrow(() -> exceptionBuilder.buildEntityNotFoundException(id));
+        Product productEntity = productRepository.getById(id);
         productEntity.changeStatus();
         return productMapper.toDto(productRepository.save(productEntity));
     }
 
     public void delete(@NotNull UUID id) {
         productRepository.deleteById(id);
-    }
-
-    @Transactional(readOnly = true)
-    private Optional<Product> findById(UUID id) {
-        return productRepository.findById(id);
     }
 
     private PageRequest buildPageRequest(ProductFilterDTO productFilterDTO) {
