@@ -3,6 +3,8 @@ package dev.guilhermevianafreire.ms.serviceproduct.config;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import dev.guilhermevianafreire.ms.serviceproduct.util.LocaleTimezoneUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,13 +16,17 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
+@RequiredArgsConstructor
 public class ResourceBundleConfiguration implements WebMvcConfigurer {
+
+  private final LocaleTimezoneUtil localeTimezoneUtil;
 
   @Bean
   public LocaleResolver localeResolver() {
     SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-    sessionLocaleResolver.setDefaultLocale(new Locale("en", "US"));
-    sessionLocaleResolver.setDefaultTimeZone(TimeZone.getTimeZone("GMT-3:00"));
+    // TODO: Recover user defined locale and timezone info stored on the database.
+    sessionLocaleResolver.setDefaultLocale(localeTimezoneUtil.getCurrentLocale());
+    sessionLocaleResolver.setDefaultTimeZone(localeTimezoneUtil.getCurrentTimeZone());
     sessionLocaleResolver.setLocaleAttributeName("session.current.locale");
     sessionLocaleResolver.setTimeZoneAttributeName("session.current.timezone");
     return sessionLocaleResolver;
@@ -38,10 +44,10 @@ public class ResourceBundleConfiguration implements WebMvcConfigurer {
     registry.addInterceptor(localeChangeInterceptor());
   }
 
-  @Bean("errorMessagesSource")
-  public MessageSource errorMessagesSource() {
+  @Bean("messageSource")
+  public MessageSource messageSource() {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-    messageSource.setBasenames("i18n/messages/error_messages");
+    messageSource.setBasenames("i18n/messages");
     messageSource.setDefaultEncoding("UTF-8");
     return messageSource;
   }
