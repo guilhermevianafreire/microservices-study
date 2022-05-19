@@ -38,15 +38,6 @@ spring:
       uri: mongodb://localhost:27017/service_product_audit?retryWrites=false
 javers:
   newObjectSnapshot: true
-  mappingStyle: FIELD
-  algorithm: SIMPLE
-  commitIdGenerator: synchronized_sequence
-  prettyPrint: true
-  typeSafeValues: false
-  initialChanges: true
-  terminalChanges: true
-  auditableAspectEnabled: true
-  springDataAuditableRepositoryAspectEnabled: true
   prettyPrintDateFormats:
     localDateTime: 'dd/MM/yyyy, HH:mm:ss'
     zonedDateTime: 'dd/MM/yyyy, HH:mm:ssZ'
