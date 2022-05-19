@@ -7,10 +7,9 @@ import org.mapstruct.Mapping;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Mapper(imports = {Collectors.class, Function.class, BigDecimal.class})
+@Mapper(imports = {Collectors.class, BigDecimal.class})
 public interface AuditMapper {
 
     @Mapping(target = "id", expression = "java(snapshot.getCommitId().valueAsNumber())")
@@ -19,7 +18,7 @@ public interface AuditMapper {
     @Mapping(target = "dateTime", source = "commitMetadata.commitDate")
     @Mapping(target = "dateTimeNoTimeZone", source = "commitMetadata.commitDateInstant")
     @Mapping(target = "properties", source = "commitMetadata.properties")
-    @Mapping(target = "data", expression = "java(snapshot.getState().getPropertyNames().stream().collect(Collectors.toMap(name -> name, name -> CdoSnapshot::getPropertyValue)))")
+    @Mapping(target = "data", expression = "java(snapshot.getState().getPropertyNames().stream().collect(Collectors.toMap(name -> name, name -> snapshot.getPropertyValue(name))))")
     @Mapping(target = "changedData", source = "changed")
     AuditDataDTO snapshotToDto(CdoSnapshot snapshot);
 
