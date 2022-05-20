@@ -3,6 +3,14 @@ server:
     encoding:
       charset: UTF-8
       force: true
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: auditevents, beans, conditions, configprops, env, health, heapdump, info, liquibase, logfile, loggers, metrics, prometheus, scheduledtasks, sessions, shutdown, threaddump
 spring:
   application:
     name: product-service
@@ -38,8 +46,3 @@ spring:
       uri: mongodb://localhost:27017/service_product_audit?retryWrites=false
 javers:
   newObjectSnapshot: true
-  prettyPrintDateFormats:
-    localDateTime: 'dd/MM/yyyy, HH:mm:ss'
-    zonedDateTime: 'dd/MM/yyyy, HH:mm:ssZ'
-    localDate: 'dd/MM/yyyy'
-    localTime: 'HH:mm:ss'
