@@ -1,22 +1,16 @@
 package dev.guilhermevianafreire.ms.serviceproduct.domain;
 
-import java.time.Instant;
-import java.util.UUID;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
-
 import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -25,23 +19,27 @@ import lombok.Setter;
 @MappedSuperclass
 public class BaseEntity {
 
-  @Id
-  @GeneratedValue(generator = "UUID")
-  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator", parameters = {
-                                                                                               @Parameter(name = "uuid_gen_strategy_class", value = "org.hibernate.id.uuid.CustomVersionOneStrategy")
-  })
-  @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false)
-  public UUID id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator", parameters = {
+            @Parameter(name = "uuid_gen_strategy_class", value = "org.hibernate.id.uuid.CustomVersionOneStrategy")
+    })
+    @Column(columnDefinition = "BINARY(16)", updatable = false)
+    public UUID id;
 
-  @NotNull
-  @Column(name = "status", columnDefinition = "SMALINT", nullable = false)
-  public StatusType status;
+    @NotNull
+    @Column(columnDefinition = "SMALINT", nullable = false)
+    public StatusType status;
 
-  public void changeStatus() {
-    if (StatusType.ACTIVE.equals(status))
-      status = StatusType.INACTIVE;
-    else
-      status = StatusType.ACTIVE;
-  }
+    @Version
+    @Column(columnDefinition = "INTEGER", nullable = false)
+    public Long version;
+
+    public void changeStatus() {
+        if (StatusType.ACTIVE.equals(status))
+            status = StatusType.INACTIVE;
+        else
+            status = StatusType.ACTIVE;
+    }
 
 }

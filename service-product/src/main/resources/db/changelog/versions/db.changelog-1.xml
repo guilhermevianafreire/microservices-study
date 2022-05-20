@@ -10,7 +10,7 @@
     </preConditions>
 
     <changeSet id="1" author="guilherme-viana-freire"
-               dbms="mysql" failOnError="true" >
+               dbms="mysql">
         <sql endDelimiter=";" splitStatements="true" stripComments="true">
             CREATE USER 'ms_product_db_user'@'%' IDENTIFIED BY '${spring.datasource.password}';
             GRANT Usage ON *.* TO 'ms_product_db_user'@'%';
@@ -39,6 +39,9 @@
                 <constraints nullable="true"/>
             </column>
             <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="INT" defaultValueNumeric="0">
                 <constraints nullable="false"/>
             </column>
         </createTable>

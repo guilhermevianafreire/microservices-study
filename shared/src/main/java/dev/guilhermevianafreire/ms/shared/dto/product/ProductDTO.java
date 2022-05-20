@@ -9,7 +9,8 @@ import java.util.UUID;
 public record ProductDTO(@Null(groups = {ProductSaveGroup.class}) @NotNull(groups = {ProductUpdateGroup.class}) UUID id,
                          @NotBlank(groups = {ProductSaveGroup.class, ProductUpdateGroup.class}) @Size(max = 100, groups = {ProductSaveGroup.class, ProductUpdateGroup.class}) String name,
                          String description,
-                         @NotNull(groups = {ProductSaveGroup.class, ProductUpdateGroup.class}) Integer statusCode) {
+                         @NotNull(groups = {ProductSaveGroup.class, ProductUpdateGroup.class}) Integer statusCode,
+                         @Null(groups = {ProductSaveGroup.class}) @NotNull(groups = {ProductUpdateGroup.class}) Long version) {
 
     public interface ProductUpdateGroup {
     }
