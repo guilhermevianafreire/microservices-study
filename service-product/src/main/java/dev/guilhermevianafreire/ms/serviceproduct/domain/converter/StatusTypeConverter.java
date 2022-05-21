@@ -15,7 +15,7 @@ public class StatusTypeConverter implements AttributeConverter<StatusType, Integ
 
   @Override
   public StatusType convertToEntityAttribute(Integer dbData) {
-    return StatusType.lookupByCode(dbData).orElseThrow();
+    return StatusType.lookupByCode(dbData);
   }
 
 }

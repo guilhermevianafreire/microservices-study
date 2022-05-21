@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
 
-    @Mapping(target = "status", expression = "java(StatusType.lookupByCode(dto.statusCode()).orElseThrow())")
+    @Mapping(target = "status", expression = "java(StatusType.lookupByCode(dto.statusCode()))")
     Product toEntity(ProductDTO dto);
 
     @Mapping(target = "statusCode", source = "status.code")
@@ -24,7 +24,7 @@ public interface ProductMapper {
                        Product origin);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "status", expression = "java(StatusType.lookupByCode(dto.statusCode()).orElseThrow())")
+    @Mapping(target = "status", expression = "java(StatusType.lookupByCode(dto.statusCode()))")
     void updateEntityWithDto(@MappingTarget Product entity,
                              ProductDTO dto);
 

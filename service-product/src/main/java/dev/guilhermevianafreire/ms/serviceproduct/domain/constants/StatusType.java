@@ -15,8 +15,8 @@ public enum StatusType {
 
     private final Integer code;
 
-    public static Optional<StatusType> lookupByCode(Integer code) {
-        return Stream.of(StatusType.values()).filter(constant -> constant.getCode().equals(code)).findFirst();
+    public static StatusType lookupByCode(Integer code) {
+        return Stream.of(StatusType.values()).filter(constant -> constant.getCode().equals(code)).findFirst().orElseThrow();
     }
 
 }
