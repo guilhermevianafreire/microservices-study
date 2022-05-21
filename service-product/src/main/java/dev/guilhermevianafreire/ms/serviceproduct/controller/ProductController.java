@@ -1,13 +1,15 @@
 package dev.guilhermevianafreire.ms.serviceproduct.controller;
 
 import dev.guilhermevianafreire.ms.serviceproduct.service.ProductService;
-import dev.guilhermevianafreire.ms.shared.dto.audit.AuditDataDTO;
+import dev.guilhermevianafreire.ms.shared.dto.audit.AuditChangeDataDTO;
+import dev.guilhermevianafreire.ms.shared.dto.audit.AuditHistoryDataDTO;
 import dev.guilhermevianafreire.ms.shared.dto.product.ProductDTO;
 import dev.guilhermevianafreire.ms.shared.dto.product.ProductFilterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,8 +31,13 @@ public class ProductController {
     }
 
     @GetMapping("/audit/{id}")
-    public List<AuditDataDTO> getProductAudit(@PathVariable("id") UUID id) {
-        return productService.getAllChangesById(id);
+    public List<AuditHistoryDataDTO> getProductAuditHistory(@PathVariable("id") UUID id) {
+        return productService.getHistoryById(id);
+    }
+
+    @GetMapping("/audit/{id}/changes/{commitId}")
+    public List<AuditChangeDataDTO> getProductAuditChanges(@PathVariable("id") UUID id, @PathVariable("commitId") BigDecimal commitID) {
+        return productService.getChangesById(id, commitID);
     }
 
     @PostMapping
