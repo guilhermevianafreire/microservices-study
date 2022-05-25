@@ -1,94 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
 
-	<preConditions onFail="HALT">
-		<dbms type="mysql" />
-		<runningAs username="ms_product_db_admin" />
-	</preConditions>
+    <preConditions onFail="HALT">
+        <dbms type="mysql"/>
+        <runningAs username="ms_product_db_admin"/>
+    </preConditions>
 
-	<changeSet id="1" author="guilherme-viana-freire"
-		dbms="mysql" labels="db.changelog-1-1">
-		<createTable tableName="product">
-			<column name="id" type="BINARY(16)">
-				<constraints primaryKey="true" nullable="false" />
-			</column>
-			<column name="name" type="VARCHAR(100)">
-				<constraints nullable="false" unique="true" />
-			</column>
-			<column name="description" type="CLOB">
-				<constraints nullable="true" />
-			</column>
-			<column name="status" type="SMALLINT">
-				<constraints nullable="false" />
-			</column>
-			<!-- AUDIT COLUMNS -->
-			<column name="created_date" type="TIMESTAMP">
-				<constraints nullable="true" />
-			</column>
+    <changeSet id="1" author="guilherme-viana-freire"
+               dbms="mysql">
+        <sql endDelimiter=";" splitStatements="true" stripComments="true">
+            CREATE USER 'ms_product_db_user'@'%' IDENTIFIED BY '${spring.datasource.password}';
+            GRANT Usage ON *.* TO 'ms_product_db_user'@'%';
+            GRANT Delete ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT Insert ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT References ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT Select ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT Show view ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT Trigger ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT Update ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT Execute ON ms_product_db.* TO 'ms_product_db_user'@'%';
+            GRANT Lock tables ON ms_product_db.* TO 'ms_product_db_user'@'%';
+        </sql>
+    </changeSet>
 
-			<column name="created_by" type="VARCHAR(255)">
-				<constraints nullable="true" />
-			</column>
+    <changeSet id="2" author="guilherme-viana-freire"
+               dbms="mysql">
+        <createTable tableName="product">
+            <column name="id" type="BINARY(16)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="description" type="CLOB">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="version" type="INT" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 
-			<column name="last_modified_date" type="TIMESTAMP">
-				<constraints nullable="true" />
-			</column>
+    <changeSet id="3" author="guilherme-viana-freire"
+               dbms="mysql">
+        <createIndex tableName="product"
+                     indexName="idx_product_name">
+            <column name="name"></column>
+        </createIndex>
 
-			<column name="last_modified_by" type="VARCHAR(255)">
-				<constraints nullable="true" />
-			</column>
-			<!-- AUDIT COLUMNS -->
-		</createTable>
-	</changeSet>
+        <createIndex tableName="product"
+                     indexName="idx_product_status">
+            <column name="status"></column>
+        </createIndex>
+    </changeSet>
 
-	<changeSet id="2" author="guilherme-viana-freire"
-		dbms="mysql" labels="db.changelog-1-2">
-		<createIndex tableName="product"
-			indexName="idx_product_name">
-			<column name="name"></column>
-		</createIndex>
-
-		<createIndex tableName="product"
-			indexName="idx_product_status">
-			<column name="status"></column>
-		</createIndex>
-	</changeSet>
-
-	<changeSet id="3" author="guilherme-viana-freire"
-		dbms="mysql" labels="db.changelog-1-3">
-		<insert tableName="product" dbms="mysql">
-			<column name="id" valueComputed="UUID_TO_BIN('093da5cb-c7d0-11ec-81a1-0242ac120006')"/>
-			<column name="name" value="Keyboard"/>
-			<column name="description" value="Computer keyboard"/>
-			<column name="status" valueNumeric="1"/>
-			<column name="created_date" valueComputed="NOW()"/>
-			<column name="created_by" value="guilhermevianafreire"/>
-			<column name="last_modified_date" valueComputed="NOW()"/>
-			<column name="last_modified_by" value="guilhermevianafreire"/>
-		</insert>
-		<insert tableName="product" dbms="mysql">
-			<column name="id" valueComputed="UUID_TO_BIN('e0572e12-c7d1-11ec-81a1-0242ac120006')"/>
-			<column name="name" value="Mouse"/>
-			<column name="description" value="Computer mouse"/>
-			<column name="status" valueNumeric="1"/>
-			<column name="created_date" valueComputed="NOW()"/>
-			<column name="created_by" value="guilhermevianafreire"/>
-			<column name="last_modified_date" valueComputed="NOW()"/>
-			<column name="last_modified_by" value="guilhermevianafreire"/>
-		</insert>
-		<insert tableName="product" dbms="mysql">
-			<column name="id" valueComputed="UUID_TO_BIN('f6349c5b-c7d1-11ec-81a1-0242ac120006')"/>
-			<column name="name" value="Monitor 24"/>
-			<column name="description" value="Computer monitor 24 inches"/>
-			<column name="status" valueNumeric="1"/>
-			<column name="created_date" valueComputed="NOW()"/>
-			<column name="created_by" value="guilhermevianafreire"/>
-			<column name="last_modified_date" valueComputed="NOW()"/>
-			<column name="last_modified_by" value="guilhermevianafreire"/>
-		</insert>
-	</changeSet>
+    <changeSet id="4" author="guilherme-viana-freire"
+               dbms="mysql">
+        <insert tableName="product">
+            <column name="id" valueComputed="UUID_TO_BIN('093da5cb-c7d0-11ec-81a1-0242ac120006')"/>
+            <column name="name" value="Keyboard"/>
+            <column name="description" value="Computer keyboard"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="id" valueComputed="UUID_TO_BIN('e0572e12-c7d1-11ec-81a1-0242ac120006')"/>
+            <column name="name" value="Mouse"/>
+            <column name="description" value="Computer mouse"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+        <insert tableName="product">
+            <column name="id" valueComputed="UUID_TO_BIN('f6349c5b-c7d1-11ec-81a1-0242ac120006')"/>
+            <column name="name" value="Monitor 24"/>
+            <column name="description" value="Computer monitor 24 inches"/>
+            <column name="status" valueNumeric="1"/>
+        </insert>
+    </changeSet>
 
 </databaseChangeLog>

@@ -6,6 +6,7 @@ import dev.guilhermevianafreire.ms.shared.dto.error.ErrorDTO;
 import dev.guilhermevianafreire.ms.shared.dto.error.ErrorDetailDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.hibernate.StaleObjectStateException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolationException;
 import java.text.MessageFormat;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -126,4 +126,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler({StaleObjectStateException.class})
+    public ResponseEntity<Object> handleStaleObjectStateException(StaleObjectStateException ex, WebRequest request) {
+        ErrorDetailDTO errorDetailDTO = ErrorDetailDTO
+                .builder()
+                .cause(ExceptionUtils.getRootCauseMessage(ex))
+                .build();
+        ErrorDTO errorDTO = ErrorDTO
+                .builder()
+                .errorCode(ErrorMessageCode.OBJECT_OPTIMISTIC_LOCKING_FAILURE_EXCEPTION.name())
+                .errorMessage(messageBundlesHelper.getMessage("object.optimistic.locking.failure.exception", ex.getEntityName(), ex.getIdentifier()))
+                .status(HttpStatus.BAD_REQUEST)
+                .path(request.getDescription(false))
+                .errorDetail(errorDetailDTO)
+                .build();
+        return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 }
