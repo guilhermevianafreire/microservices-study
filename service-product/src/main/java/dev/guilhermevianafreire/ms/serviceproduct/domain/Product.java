@@ -20,8 +20,8 @@ import javax.validation.constraints.Size;
 @Table(name = "product")
 public class Product extends BaseEntity {
 
-    @NotBlank
-    @Size(max = 100)
+    @NotBlank(groups = {SaveGroup.class, UpdateGroup.class})
+    @Size(max = 100, groups = {SaveGroup.class, UpdateGroup.class})
     @Column(length = 100, nullable = false, unique = true)
     private String name;
 
