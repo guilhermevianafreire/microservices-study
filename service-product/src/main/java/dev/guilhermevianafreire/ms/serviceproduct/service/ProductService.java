@@ -2,14 +2,10 @@ package dev.guilhermevianafreire.ms.serviceproduct.service;
 
 import dev.guilhermevianafreire.ms.serviceproduct.domain.Product;
 import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
+import dev.guilhermevianafreire.ms.serviceproduct.exception.EntityNotFoundException;
 import dev.guilhermevianafreire.ms.serviceproduct.repository.ProductRepository;
-import dev.guilhermevianafreire.ms.serviceproduct.service.mapper.ProductMapper;
 import dev.guilhermevianafreire.ms.serviceproduct.service.validation.ServiceValidationHelper;
-import dev.guilhermevianafreire.ms.shared.dto.audit.AuditChangeDataDTO;
-import dev.guilhermevianafreire.ms.shared.dto.audit.AuditHistoryDataDTO;
-import dev.guilhermevianafreire.ms.shared.dto.product.ProductDTO;
 import dev.guilhermevianafreire.ms.shared.dto.product.ProductFilterDTO;
-import dev.guilhermevianafreire.ms.shared.mapper.AuditMapper;
 import lombok.RequiredArgsConstructor;
 import org.javers.core.Changes;
 import org.javers.core.Javers;
@@ -51,14 +47,16 @@ public class ProductService extends BaseService<Product> {
 
     @Transactional(readOnly = true)
     public Product findProductById(@NotNull UUID id) {
-        return productRepository.getById(id);
+        return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(Product.class, id));
     }
 
+    @Transactional(readOnly = true)
     public List<CdoSnapshot> getHistoryById(UUID id) {
         QueryBuilder queryBuilder = QueryBuilder.byInstanceId(id.toString(), Product.class);
         return javers.findSnapshots(queryBuilder.build());
     }
 
+    @Transactional(readOnly = true)
     public Changes getChangesById(UUID id, BigDecimal commitId) {
         QueryBuilder queryBuilder = QueryBuilder.byInstanceId(id.toString(), Product.class);
         queryBuilder.withCommitId(commitId);
@@ -82,7 +80,9 @@ public class ProductService extends BaseService<Product> {
     }
 
     public void delete(@NotNull UUID id) {
-        productRepository.deleteById(id);
+        productRepository.delete(productRepository
+                .findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(Product.class, id)));
     }
 
     private PageRequest buildPageRequest(ProductFilterDTO productFilterDTO) {
