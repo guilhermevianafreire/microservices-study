@@ -126,6 +126,24 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler({dev.guilhermevianafreire.ms.serviceproduct.exception.EntityNotFoundException.class})
+    public ResponseEntity<Object> handleEntityNotFoundException(dev.guilhermevianafreire.ms.serviceproduct.exception.EntityNotFoundException ex, WebRequest request) {
+        ErrorDetailDTO errorDetailDTO = ErrorDetailDTO
+                .builder()
+                .cause(ExceptionUtils.getRootCauseMessage(ex))
+                .stackTraceAbbreviated(ex, 200)
+                .build();
+        ErrorDTO errorDTO = ErrorDTO
+                .builder()
+                .errorCode(ErrorMessageCode.ENTITY_NOT_FOUND_EXCEPTION.name())
+                .errorMessage(messageBundlesHelper.getMessage("entity.not.found.id", ex.getEntityClass().getSimpleName(), ex.getId().toString()))
+                .status(HttpStatus.BAD_REQUEST)
+                .path(request.getDescription(false))
+                .errorDetail(errorDetailDTO)
+                .build();
+        return handleExceptionInternal(ex, errorDTO, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     @ExceptionHandler({StaleObjectStateException.class})
     public ResponseEntity<Object> handleStaleObjectStateException(StaleObjectStateException ex, WebRequest request) {
         ErrorDetailDTO errorDetailDTO = ErrorDetailDTO
@@ -135,7 +153,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorDTO errorDTO = ErrorDTO
                 .builder()
                 .errorCode(ErrorMessageCode.OBJECT_OPTIMISTIC_LOCKING_FAILURE_EXCEPTION.name())
-                .errorMessage(messageBundlesHelper.getMessage("object.optimistic.locking.failure.exception", ex.getEntityName(), ex.getIdentifier()))
+                .errorMessage(messageBundlesHelper.getMessage("entity.optimistic.locking.failure.exception", ex.getEntityName(), ex.getIdentifier()))
                 .status(HttpStatus.BAD_REQUEST)
                 .path(request.getDescription(false))
                 .errorDetail(errorDetailDTO)
