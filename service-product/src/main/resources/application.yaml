@@ -1,0 +1,48 @@
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: auditevents, beans, conditions, configprops, env, health, heapdump, info, liquibase, logfile, loggers, metrics, prometheus, scheduledtasks, sessions, shutdown, threaddump
+spring:
+  application:
+    name: product-service
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  liquibase:
+    url: jdbc:mysql://localhost:3306/ms_product_db?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    user: ms_product_db_admin
+    password: ms_product_db_admin
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    parameters:
+      spring.datasource.password: ${spring.datasource.password}
+  jpa:
+    open-in-view: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/ms_product_db?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ms_product_db_user
+    password: ms_product_db_user
+    hikari:
+      poolName: Hikari
+      auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/service_product_audit?retryWrites=false
+javers:
+  newObjectSnapshot: true
