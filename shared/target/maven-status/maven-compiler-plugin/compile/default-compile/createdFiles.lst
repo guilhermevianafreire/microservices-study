@@ -1,0 +1,11 @@
+dev/guilhermevianafreire/ms/shared/dto/audit/AuditChangeType.class
+dev/guilhermevianafreire/ms/shared/dto/error/ErrorDetailDTO.class
+dev/guilhermevianafreire/ms/shared/dto/error/ErrorDTO.class
+dev/guilhermevianafreire/ms/shared/mapper/AuditMapper.class
+dev/guilhermevianafreire/ms/shared/dto/audit/AuditChangePropertyType.class
+dev/guilhermevianafreire/ms/shared/dto/error/ErrorDTO$Builder.class
+dev/guilhermevianafreire/ms/shared/dto/error/ErrorDetailDTO$Builder.class
+dev/guilhermevianafreire/ms/shared/dto/audit/AuditHistoryType.class
+dev/guilhermevianafreire/ms/shared/dto/audit/AuditChangeDataDTO.class
+dev/guilhermevianafreire/ms/shared/dto/audit/AuditHistoryDataDTO.class
+dev/guilhermevianafreire/ms/shared/mapper/AuditMapperImpl.class

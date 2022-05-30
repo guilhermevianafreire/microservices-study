@@ -1,7 +1,7 @@
 package dev.guilhermevianafreire.ms.serviceproduct.domain;
 
 import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
-import dev.guilhermevianafreire.ms.shared.dto.product.ProductDTO;
+import dev.guilhermevianafreire.ms.serviceproductclient.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

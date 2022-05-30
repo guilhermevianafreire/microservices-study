@@ -19,6 +19,8 @@ Frameworks, libraries and tools tha will be used on this projects.
 - Redis
 - Docker
 - Terraform
+- GraalVM
+- Webpack - Module Federation
 
 ## Milestone 1
 Create a basic microservice for testing.
@@ -51,7 +53,7 @@ Implement basic communication between microservices
 - MapStruct
 
 ## Milestone 6
-Implement failover for microservices comunications
+Implement fail over for microservices communications
 
 - Spring Cloud Circuit Breaker
 
@@ -64,7 +66,7 @@ Implement oauth security
 ## Fase 8
 Implement Saga Pattern
 
-- Apache Kafka
+- Apache Kafka/home/guilherme/Desenvolvimento/Projetos/microservices-study/service-product
 - Coreography
 
 ## Milestone 9
@@ -96,7 +98,7 @@ Create base UI
 - Node
 
 ## Milestone 14
-Implememt core and shared libraries and services
+Implement core and shared libraries and services
 
 - Formatting
 - Mappring services
@@ -107,17 +109,17 @@ Implememt core and shared libraries and services
 
 
 ## Milestone 15
-Implememt internationalization
+Implement internationalization
 
 - Translation
 
 ## Milestone 16
-Implememt security
+Implement security
 
 - Security
 
 ## Milestone 17
-Implememt backend communication layer
+Implement backend communication layer
 
 - Product Service
 - Inventory Service
@@ -125,7 +127,7 @@ Implememt backend communication layer
 - Payment Service
 
 ## Milestone 18
-Implememt pages and validation
+Implement pages and validation
 
 - Product
 - Inventory
@@ -133,9 +135,15 @@ Implememt pages and validation
 - Payment
 
 ## Milestone 19
-Implememt routing
+Implement routing
 
 - Product
 - Inventory
 - Order
 - Payment
+
+## Milestone 20
+Compile backend in native executable using GraalVM
+
+## Milestone 21
+Convert frontend to a micro-frontend user Webpack Module Federation

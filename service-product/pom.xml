@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -10,10 +11,13 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <groupId>dev.guilhermevianafreire.ms</groupId>
+    <artifactId>service-product</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+
     <organization>
         <name>guilhermevianafreire.dev</name>
     </organization>
-
     <developers>
         <developer>
             <name>Guilherme Viana Freire</name>
@@ -21,12 +25,9 @@
             <email>guilherme.viana.freire@gmail.com</email>
         </developer>
     </developers>
-
-    <groupId>dev.guilhermevianafreire.ms</groupId>
-    <artifactId>service-product</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
     <name>service-product</name>
     <description>Microservice for the product domain.</description>
+
     <properties>
         <java.version>17</java.version>
         <project.java.version>${java.version}</project.java.version>
@@ -126,6 +127,11 @@
         <dependency>
             <groupId>dev.guilhermevianafreire.ms</groupId>
             <artifactId>shared</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.guilhermevianafreire.ms</groupId>
+            <artifactId>service-product-client</artifactId>
             <version>0.0.3-SNAPSHOT</version>
         </dependency>
         <!-- INTERNAL -->

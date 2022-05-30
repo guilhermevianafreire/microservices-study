@@ -1,8 +1,8 @@
 package dev.guilhermevianafreire.ms.shared.mapper;
 
 import dev.guilhermevianafreire.ms.shared.dto.audit.AuditChangeDataDTO;
-import dev.guilhermevianafreire.ms.shared.dto.audit.AuditChangePropertyType;
 import dev.guilhermevianafreire.ms.shared.dto.audit.AuditHistoryDataDTO;
+import dev.guilhermevianafreire.ms.shared.dto.audit.AuditHistoryType;
 import org.javers.core.Changes;
 import org.javers.core.diff.Change;
 import org.javers.core.diff.changetype.NewObject;
@@ -15,11 +15,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(imports = {Collectors.class, BigDecimal.class, ValueChange.class, NewObject.class})
+@Mapper(imports = {Collectors.class, BigDecimal.class, ValueChange.class, NewObject.class, AuditHistoryType.class})
 public interface AuditMapper {
 
     @Mapping(target = "id", expression = "java(snapshot.getCommitId().valueAsNumber())")
-    @Mapping(target = "type", expression = "java(dev.guilhermevianafreire.ms.shared.dto.audit.AuditHistoryType.valueOf(snapshot.getType().name()))")
+    @Mapping(target = "type", expression = "java(AuditHistoryType.valueOf(snapshot.getType().name()))")
     @Mapping(target = "author", source = "commitMetadata.author")
     @Mapping(target = "dateTime", source = "commitMetadata.commitDate")
     @Mapping(target = "dateTimeNoTimeZone", source = "commitMetadata.commitDateInstant")

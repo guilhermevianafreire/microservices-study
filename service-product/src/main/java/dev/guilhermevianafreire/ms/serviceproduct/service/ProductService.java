@@ -5,7 +5,7 @@ import dev.guilhermevianafreire.ms.serviceproduct.domain.constants.StatusType;
 import dev.guilhermevianafreire.ms.serviceproduct.exception.EntityNotFoundException;
 import dev.guilhermevianafreire.ms.serviceproduct.repository.ProductRepository;
 import dev.guilhermevianafreire.ms.serviceproduct.service.validation.ServiceValidationHelper;
-import dev.guilhermevianafreire.ms.shared.dto.product.ProductFilterDTO;
+import dev.guilhermevianafreire.ms.serviceproductclient.dto.ProductFilterDTO;
 import lombok.RequiredArgsConstructor;
 import org.javers.core.Changes;
 import org.javers.core.Javers;
