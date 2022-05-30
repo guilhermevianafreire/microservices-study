@@ -2,7 +2,7 @@
 Projects that help understand and practice common microservices patterns, frameworks and ideas.
 
 ## Technologies
-Frameworks, libraries and tools tha will be used on this projects.
+Frameworks, libraries and tools tha will be used on these projects.
 - Java
 - TypeScript
 - Spring Boot
@@ -19,6 +19,8 @@ Frameworks, libraries and tools tha will be used on this projects.
 - Redis
 - Docker
 - Terraform
+- GraalVM
+- Webpack - Module Federation
 
 ## Milestone 1
 Create a basic microservice for testing.
@@ -42,16 +44,16 @@ Create more microservices
 - Inventory Service
 - Order Service
 - Payment Service
+- Shipping
 
 ## Milestone 5
 Implement basic communication between microservices
 
 - Spring Cloud OpenFeign
-- Create client libs to store DTOS and OpenFeign interfaces
-- MapStruct
+- Create client libs to store DTOs and OpenFeign interfaces
 
 ## Milestone 6
-Implement failover for microservices comunications
+Implement fail over for microservices communications
 
 - Spring Cloud Circuit Breaker
 
@@ -61,11 +63,11 @@ Implement oauth security
 - Spring Security Oauth
 - Keycloak
 
-## Fase 8
+## Milestone 8
 Implement Saga Pattern
 
 - Apache Kafka
-- Coreography
+- Choreography
 
 ## Milestone 9
 Implement external communication
@@ -96,28 +98,27 @@ Create base UI
 - Node
 
 ## Milestone 14
-Implememt core and shared libraries and services
+Implement core and shared libraries and services
 
 - Formatting
-- Mappring services
+- Mapping
 - Alert
 - Paging
 - Navbar
 - Landing page
 
-
 ## Milestone 15
-Implememt internationalization
+Implement internationalization
 
 - Translation
 
 ## Milestone 16
-Implememt security
+Implement security
 
 - Security
 
 ## Milestone 17
-Implememt backend communication layer
+Implement backend communication layer
 
 - Product Service
 - Inventory Service
@@ -125,7 +126,7 @@ Implememt backend communication layer
 - Payment Service
 
 ## Milestone 18
-Implememt pages and validation
+Implement pages and validation
 
 - Product
 - Inventory
@@ -133,9 +134,24 @@ Implememt pages and validation
 - Payment
 
 ## Milestone 19
-Implememt routing
+Implement routing
 
 - Product
 - Inventory
 - Order
 - Payment
+
+## Milestone 20
+Compile backend in native executable using GraalVM
+- Spring Native
+- Native Unit Testing
+
+## Milestone 21
+Convert frontend to a micro-frontend
+
+- Module Federation
+
+## Milestone 22
+Continuous integration and delivery
+
+- Tool to be determined (Jenkins, Jenkins X, GitHub Actions, GitLab)

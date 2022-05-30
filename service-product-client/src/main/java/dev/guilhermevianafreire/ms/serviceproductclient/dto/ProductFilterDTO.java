@@ -1,4 +1,4 @@
-package dev.guilhermevianafreire.ms.shared.dto.product;
+package dev.guilhermevianafreire.ms.serviceproductclient.dto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

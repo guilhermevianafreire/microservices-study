@@ -29,16 +29,14 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.4.2.Final/mapstruct-1.4.2.Final.jar" />
         </processorPath>
         <module name="shared" />
+        <module name="service-product-client" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="service-product" target="17" />
-      <module name="shared" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="service-product" options="-parameters -Amapstruct.defaultComponentModel=spring" />
+      <module name="service-product-client" options="-Amapstruct.defaultComponentModel=spring" />
       <module name="shared" options="-Amapstruct.defaultComponentModel=spring" />
     </option>
   </component>
