@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1" author="guilherme-viana-freire">
+        <createTable tableName="category">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_category"/>
+            </column>
+            <column name="external_id" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="id_parent_category" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="category"
+                                 baseColumnNames="id_parent_category"
+                                 constraintName="fk_category_1"
+                                 referencedTableName="category"
+                                 referencedColumnNames="id"
+        />
+
+        <createTable tableName="barcode_type">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_barcode_type"/>
+            </column>
+            <column name="external_id" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="product">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="pk_product"/>
+            </column>
+            <column name="external_id" type="UUID">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="id_category" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="sku" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="short_description" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="full_description" type="VARCHAR(2000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_barcode_type" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="barcode" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="id_category"
+                                 constraintName="fk_product_1"
+                                 referencedTableName="category"
+                                 referencedColumnNames="id"
+        />
+
+        <addForeignKeyConstraint baseTableName="product"
+                                 baseColumnNames="id_barcode_type"
+                                 constraintName="fk_product_2"
+                                 referencedTableName="barcode_type"
+                                 referencedColumnNames="id"
+        />
+    </changeSet>
+
+</databaseChangeLog>
