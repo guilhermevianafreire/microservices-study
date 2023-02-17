@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+
+  postgresql-product:
+    image: "postgres:${POSTGRESQL_VERSION}"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql-product-data:/var/lib/postgresql/data
+    env_file:
+      - postgresql-product.env
+    networks:
+      - microservices-network
+
+  postgresql-keycloak:
+    image: "postgres:${POSTGRESQL_VERSION}"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgresql-keycloak-data:/var/lib/postgresql/data
+    env_file:
+      - postgresql-product.env
+    networks:
+      - microservices-network
+
+  keycloak:
+    image: "quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}"
+    command:
+      - start-dev
+    ports:
+      - 8001:8080
+    env_file:
+      - keycloak.env
+    networks:
+      - microservices-network
+    depends_on:
+      - postgresql-keycloak
+
+
+volumes:
+  postgresql-product-data:
+  postgresql-keycloak-data:
+
+networks:
+  microservices-network: {}
