@@ -1,0 +1,27 @@
+spring:
+  output:
+    ansi:
+      enabled: always
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost/product_db
+    username: product_db
+    password: product_db
+  jpa:
+    open-in-view: false
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+  web:
+    locale: pt_BR
+springdoc:
+  show-actuator: true
+server:
+  error:
+    include-stacktrace: on_param
+    include-message: on_param
+
+productService:
+  rest:
+    response:
+      pagination:
+        pageSize: 10
