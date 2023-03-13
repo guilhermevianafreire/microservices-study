@@ -3,6 +3,7 @@ version: "3.9"
 services:
 
   postgresql-product:
+    container_name: postgresql-product
     image: "postgres:${POSTGRESQL_VERSION}"
     ports:
       - "5432:5432"
@@ -14,6 +15,7 @@ services:
       - microservices-network
 
   postgresql-keycloak:
+    container_name: postgresql-keycloak
     image: "postgres:${POSTGRESQL_VERSION}"
     ports:
       - "5433:5432"
@@ -25,6 +27,7 @@ services:
       - microservices-network
 
   keycloak:
+    container_name: keycloak
     image: "quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}"
     command:
       - start-dev
