@@ -11,7 +11,6 @@
         <relativePath>../microservices/pom.xml</relativePath>
     </parent>
 
-    <groupId>br.dev.gvf</groupId>
     <artifactId>product-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
