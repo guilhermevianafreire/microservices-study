@@ -23,9 +23,9 @@ public class BarcodeTypeV1ControllerImpl implements BarcodeTypeV1Controller {
   private final BarcodeTypeMapper barcodeTypeMapper;
 
   @Override
-  public BarcodeTypeGetByIdResponse findById(UUID externalId) {
+  public BarcodeTypeGetByIdResponse findById(UUID id) {
     return barcodeTypeMapper.barcodeTypeToBarcodeTypeResponse(
-        barcodeTypeService.findByIdExternal(externalId));
+        barcodeTypeService.findByIdExternal(id));
   }
 
   @Override
@@ -44,6 +44,11 @@ public class BarcodeTypeV1ControllerImpl implements BarcodeTypeV1Controller {
   public void update(UUID id, BarcodeTypeUpdateRequest request) {
     barcodeTypeService.update(
         barcodeTypeMapper.barcodeTypeDtoUpdateRequestToBarcodeType(id, request));
+  }
+
+  @Override
+  public void delete(UUID id) {
+    barcodeTypeService.delete(id);
   }
 
   @Override

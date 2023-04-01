@@ -33,6 +33,9 @@ public interface BarcodeTypeRepository extends JpaRepository<BarcodeType, BigInt
 
   boolean existsByName(String name);
 
+  @Query("SELECT CASE WHEN COUNT(p)> 0 THEN true ELSE false END FROM BarcodeType b LEFT JOIN b.products p WHERE b.externalId = :externalId")
+  boolean existsProductsRelationshipsById(@Param("externalId") UUID id);
+
   Page<BarcodeType> findByActiveTrue(Pageable pageable);
 
   Page<BarcodeType> findByNameLikeAndActiveTrue(String name, Pageable pageable);
@@ -41,5 +44,4 @@ public interface BarcodeTypeRepository extends JpaRepository<BarcodeType, BigInt
   @Query("UPDATE BarcodeType b SET b.active = :active WHERE b.externalId = :externalId")
   void updateActiveByExternalId(@Param("externalId") UUID externalId,
       @Param("active") boolean active);
-
 }

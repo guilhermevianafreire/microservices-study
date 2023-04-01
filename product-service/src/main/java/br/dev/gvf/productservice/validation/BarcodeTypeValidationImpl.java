@@ -7,9 +7,12 @@ import br.dev.gvf.productservice.repository.BarcodeTypeRepository;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
+@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 public class BarcodeTypeValidationImpl implements BarcodeTypeValidation {
 
   private final BarcodeTypeRepository repository;
@@ -18,18 +21,18 @@ public class BarcodeTypeValidationImpl implements BarcodeTypeValidation {
   public void checkNewNameUnique(String name) {
     repository.findIdByName(name).ifPresent(barcodeTypeId -> {
       throw new ValidationException(BarcodeType.class, BarcodeType_.NAME,
-          "BarcodeType name alredy exists",
-          "The supplyed name '%s' is alredy registered to BarcodeType with id '%s'".formatted(name,
+          "BarcodeType name already exists",
+          "The supplied name '%s' is already registered to BarcodeType with id '%s'".formatted(name,
               barcodeTypeId));
     });
   }
 
   @Override
-  public void checkUpdateNameUnique(String name, UUID externalId) {
-    repository.findIdByNameAndNotExternalId(name, externalId).ifPresent(barcodeTypeId -> {
+  public void checkUpdateNameUnique(String name, UUID id) {
+    repository.findIdByNameAndNotExternalId(name, id).ifPresent(barcodeTypeId -> {
       throw new ValidationException(BarcodeType.class, BarcodeType_.NAME,
-          "BarcodeType name alredy exists",
-          "The supplyed name '%s' is alredy registered to BarcodeType with id '%s'".formatted(name,
+          "BarcodeType name already exists",
+          "The supplied name '%s' is already registered to BarcodeType with id '%s'".formatted(name,
               barcodeTypeId));
     });
   }
@@ -38,9 +41,18 @@ public class BarcodeTypeValidationImpl implements BarcodeTypeValidation {
   public void checkExternalIdExists(UUID id) {
     if (!repository.existsByExternalId(id)) {
       throw new ValidationException(BarcodeType.class, BarcodeType_.NAME,
-          "BarcodeType doesen't exists",
-          "No BarcodeType was found with the supplyed id '%s'".formatted(id));
+          "BarcodeType doesn't exists",
+          "No BarcodeType was found with the supplied id '%s'".formatted(id));
     }
   }
-  
+
+  @Override
+  public void checkHasProductRelationships(UUID id) {
+    if (repository.existsProductsRelationshipsById(id)) {
+      throw new ValidationException(BarcodeType.class, BarcodeType_.NAME,
+          "BarcodeType has relationships and cannot be deleted",
+          "BarcodeType with the supplied id '%s' has relationships with one or more products".formatted(
+              id));
+    }
+  }
 }

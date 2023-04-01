@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 public interface BarcodeTypeService {
 
-  BarcodeType findByIdExternal(@Valid @NotNull final UUID externalId);
+  BarcodeType findByIdExternal(@Valid @NotNull final UUID id);
 
   Page<BarcodeType> search(@Valid final BarcodeTypeFilterDTO filters);
 
@@ -22,4 +22,5 @@ public interface BarcodeTypeService {
 
   void updateActive(@Valid @NotNull final UUID externalId, final boolean active);
 
+  void delete(UUID id);
 }

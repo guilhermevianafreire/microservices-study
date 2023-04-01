@@ -49,4 +49,4 @@ server:
 productService:
   rest:
     pagination:
-      pageSize: 10
+      pageSize: 15

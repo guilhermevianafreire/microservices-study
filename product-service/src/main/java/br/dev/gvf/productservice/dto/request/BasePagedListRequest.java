@@ -20,7 +20,7 @@ public class BasePagedListRequest<T extends BasePagedListRequest<T>> {
   @Schema(title = "Page Number", description = "Define the number of the page the response should return. First page is 0 (zero)", nullable = true, minimum = "0", defaultValue = "0", example = "0")
   @PositiveOrZero
   private Integer pageNumber = 0;
-  @Schema(title = "Page Size", description = "Define the number of elements on the response page. Minimum value is 1 (one)", nullable = true, minimum = "1", example = "10")
+  @Schema(title = "Page Size", description = "Define the number of elements on the response page. Minimum value is 1 (one)", nullable = true, defaultValue = "15", minimum = "1", example = "15")
   @Positive
   private Integer pageSize;
   @Schema(title = "Order by", description = "List of property names and directions concatenated by : and ,", example = "name:asc,email:desc")

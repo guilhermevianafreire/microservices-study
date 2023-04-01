@@ -10,6 +10,7 @@ import br.dev.gvf.productservice.model.BarcodeType;
 import br.dev.gvf.productservice.repository.BarcodeTypeRepository;
 import br.dev.gvf.productservice.validation.BarcodeTypeValidation;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,9 +41,9 @@ public class BarcodeTypeServiceImpl implements BarcodeTypeService {
   @Value("${productService.rest.pagination.pageSize}")
   private Integer defaultPageSize;
 
-  public BarcodeType findByIdExternal(final UUID externalId) {
-    return barcodeTypeRepository.findByExternalId(externalId)
-        .orElseThrow(() -> new EntityNotFoundException(NOT_DOUND_BY_UUID.formatted(externalId)));
+  public BarcodeType findByIdExternal(final UUID id) {
+    return barcodeTypeRepository.findByExternalId(id)
+        .orElseThrow(() -> new EntityNotFoundException(NOT_DOUND_BY_UUID.formatted(id)));
   }
 
   public Page<BarcodeType> search(final BarcodeTypeFilterDTO filters) {
@@ -87,7 +88,18 @@ public class BarcodeTypeServiceImpl implements BarcodeTypeService {
     barcodeTypeValidation.checkExternalIdExists(dto.getId());
     barcodeTypeValidation.checkUpdateNameUnique(dto.getName(), dto.getId());
     barcodeTypeRepository.save(barcodeTypeMapper.barcodeTypeDtoToBarcodeType(dto,
-        barcodeTypeRepository.findIdByExternalId(dto.getId()).orElseThrow()));
+        barcodeTypeRepository.findIdByExternalId(dto.getId())
+            .orElseThrow(() -> new NoSuchElementException(
+                "No BarcodeType was found with the supplied id '%s'".formatted(dto.getId())))));
+  }
+
+  @Override
+  public void delete(UUID id) {
+    barcodeTypeValidation.checkExternalIdExists(id);
+    barcodeTypeValidation.checkHasProductRelationships(id);
+    barcodeTypeRepository.deleteById(barcodeTypeRepository.findIdByExternalId(id)
+        .orElseThrow(() -> new NoSuchElementException(
+            "No BarcodeType was found with the supplied id '%s'".formatted(id))));
   }
 
   @Transactional(propagation = Propagation.REQUIRED)
