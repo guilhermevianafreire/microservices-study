@@ -5,50 +5,65 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
+import java.math.BigInteger;
+import java.util.UUID;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
-
-import java.math.BigInteger;
-import java.util.Objects;
-import java.util.UUID;
+import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @MappedSuperclass
-@SuperBuilder
 @Getter
 @Setter
+@ToString
+@Accessors(chain = true)
+@EqualsAndHashCode(exclude = "id")
 @NoArgsConstructor
-public class BaseEntity {
+public class BaseEntity<T extends BaseEntity<T>> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private BigInteger id;
 
-    @NotNull
-    @Column(name = "external_id", nullable = false, updatable = false, unique = true)
-    private UUID externalId;
+  @NotNull
+  @Column(
+      name = "external_id",
+      nullable = false,
+      updatable = false,
+      unique = true
+  )
+  private UUID externalId = UUID.randomUUID();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BaseEntity that = (BaseEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(externalId, that.externalId);
-    }
+  private boolean active = true;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, externalId);
-    }
+  @Version
+  private long version;
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("BaseEntity{");
-        sb.append("id=").append(id);
-        sb.append(", externalId=").append(externalId);
-        sb.append('}');
-        return sb.toString();
-    }
+  @SuppressWarnings("unchecked")
+  public T setId(BigInteger id) {
+    this.id = id;
+    return (T) this;
+  }
+
+  @SuppressWarnings("unchecked")
+  public T setExternalId(UUID externalId) {
+    this.externalId = externalId;
+    return (T) this;
+  }
+
+  @SuppressWarnings("unchecked")
+  public T setActive(boolean active) {
+    this.active = active;
+    return (T) this;
+  }
+
+  @SuppressWarnings("unchecked")
+  public T setVersion(long version) {
+    this.version = version;
+    return (T) this;
+  }
 }

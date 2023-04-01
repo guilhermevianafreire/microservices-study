@@ -1,0 +1,28 @@
+package br.dev.gvf.productservice.dto.barcodetype.response;
+
+import br.dev.gvf.productservice.dto.BaseIdVersion;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+
+@Getter
+@Setter
+@ToString
+@Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
+public class BarcodeTypeGetByIdResponse extends BaseIdVersion<BarcodeTypeGetByIdResponse> {
+
+  @Schema(
+      title = "Name",
+      description = "Name of the Barcode Type",
+      requiredMode = Schema.RequiredMode.REQUIRED,
+      minLength = 1,
+      maxLength = 200,
+      example = "EAN-128"
+  )
+  private String name;
+
+}

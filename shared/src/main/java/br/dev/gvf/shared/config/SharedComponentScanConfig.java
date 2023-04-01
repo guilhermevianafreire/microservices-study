@@ -1,4 +1,4 @@
-package br.dev.gvf.shared;
+package br.dev.gvf.shared.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

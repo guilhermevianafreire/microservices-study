@@ -1,27 +1,52 @@
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 60s
   output:
     ansi:
       enabled: always
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost/product_db
-    username: product_db
-    password: product_db
+    url:
+    username:
+    password:
   jpa:
     open-in-view: false
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: UNSPECIFIED
   liquibase:
     change-log: db/changelog/db.changelog-master.xml
   web:
-    locale: pt_BR
+    locale: en_US
+
+management:
+  endpoint:
+    health:
+      show-details: when_authorized
+  endpoints:
+    enabled-by-default: true
+    jmx:
+      exposure:
+        include: '*'
+    web:
+      exposure:
+        include: '*'
+
 springdoc:
   show-actuator: true
+
 server:
   error:
-    include-stacktrace: on_param
-    include-message: on_param
+    include-stacktrace: never
+    include-message: never
+  shutdown: graceful
+  tomcat:
+    mbeanregistry:
+      enabled: true
 
 productService:
   rest:
-    response:
-      pagination:
-        pageSize: 10
+    pagination:
+      pageSize: 10

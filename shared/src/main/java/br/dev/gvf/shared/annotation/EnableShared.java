@@ -1,6 +1,6 @@
 package br.dev.gvf.shared.annotation;
 
-import br.dev.gvf.shared.SharedComponentScanConfig;
+import br.dev.gvf.shared.config.SharedComponentScanConfig;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.AliasFor;
 

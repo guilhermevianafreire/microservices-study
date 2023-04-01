@@ -7,11 +7,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum DatabaseLikeTypes {
 
-    START_WITH("%%%s"),
-    END_WITH("%s%%"),
-    START_AND_END_WITH("%%%s%%")
-    ;
+  START_WITH("%s%%"),
+  END_WITH("%%%s"),
+  CONTAINS("%%%s%%");
 
-    private final String pattern;
+  private final String pattern;
 
 }

@@ -8,13 +8,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class BarcodeTypeServiceApplicationTests {
 
-    @Value("${productService.rest.response.pagination.pageSize}")
+    @Value("${productService.rest.pagination.pageSize}")
     private Integer pageSize;
 
     @Test
     void contextLoads() {
         Assertions.assertNotNull(pageSize);
-        Assertions.assertEquals(10, pageSize);
+        Assertions.assertEquals(
+                10,
+                pageSize
+        );
     }
 
 }
