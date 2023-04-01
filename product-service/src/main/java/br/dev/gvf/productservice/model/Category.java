@@ -17,6 +17,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 @NamedEntityGraph(
     name = "Category.ParentCategory",
@@ -47,9 +49,11 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
+@Audited
+@AuditOverride(forClass = AuditableEntity.class)
 @Entity
 @Table(name = "category")
-public class Category extends BaseEntity<Category> {
+public class Category extends AuditableEntity<Category> {
 
   @Size(max = 200)
   @NotBlank

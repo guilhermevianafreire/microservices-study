@@ -1,105 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="1" author="guilherme-viana-freire">
-        <createTable tableName="category">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" primaryKeyName="category_pk"/>
-            </column>
-            <column name="external_id" type="UUID">
-                <constraints nullable="false" unique="true" uniqueConstraintName="category_external_id_uq"/>
-            </column>
-            <column name="id_parent_category" type="BIGINT">
-                <constraints nullable="true"/>
-            </column>
-            <column name="name" type="VARCHAR(200)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="category_name_uq"/>
-            </column>
-            <column name="active" type="BOOLEAN" defaultOnNull="true">
-                <constraints nullable="false"/>
-            </column>
-            <column name="version" type="INT">
-                <constraints nullable="true"/>
-            </column>
-        </createTable>
+  <changeSet id="1" author="guilherme-viana-freire">
+    <createTable tableName="revinfo">
+      <column name="rev" type="BIGINT">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="revtstmp" type="bigint"/>
+    </createTable>
 
-        <addForeignKeyConstraint baseTableName="category"
-                                 baseColumnNames="id_parent_category"
-                                 constraintName="category_fk_1"
-                                 referencedTableName="category"
-                                 referencedColumnNames="id"
-        />
+    <createSequence sequenceName="revinfo_seq" incrementBy="50"/>
 
-        <createTable tableName="barcode_type">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" primaryKeyName="barcode_type_pk"/>
-            </column>
-            <column name="external_id" type="UUID">
-                <constraints nullable="false" unique="true" uniqueConstraintName="barcode_type_external_id_uq"/>
-            </column>
-            <column name="name" type="VARCHAR(200)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="barcode_type_name_uq"/>
-            </column>
-            <column name="active" type="BOOLEAN" defaultOnNull="true">
-                <constraints nullable="false"/>
-            </column>
-            <column name="version" type="INT">
-                <constraints nullable="true"/>
-            </column>
-        </createTable>
+    <createTable tableName="category">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="category_pk"/>
+      </column>
+      <column name="external_id" type="UUID">
+        <constraints nullable="false" unique="true" uniqueConstraintName="category_external_id_uq"/>
+      </column>
+      <column name="id_parent_category" type="BIGINT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="name" type="VARCHAR(200)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="category_name_uq"/>
+      </column>
+      <column name="active" type="BOOLEAN" defaultOnNull="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="version" type="INT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
 
-        <createTable tableName="product">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false" primaryKeyName="product_pk"/>
-            </column>
-            <column name="external_id" type="UUID">
-                <constraints nullable="false" unique="true" uniqueConstraintName="product_external_id_uq"/>
-            </column>
-            <column name="id_category" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="name" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="product_name_uq"/>
-            </column>
-            <column name="sku" type="VARCHAR(50)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="product_sku_uq"/>
-            </column>
-            <column name="short_description" type="VARCHAR(200)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="full_description" type="VARCHAR(2000)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="id_barcode_type" type="BIGINT">
-                <constraints nullable="true"/>
-            </column>
-            <column name="barcode" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="active" type="BOOLEAN" defaultOnNull="true">
-                <constraints nullable="false"/>
-            </column>
-            <column name="version" type="INT">
-                <constraints nullable="true"/>
-            </column>
-        </createTable>
+    <addForeignKeyConstraint baseTableName="category" baseColumnNames="id_parent_category"
+      constraintName="category_fk_1" referencedTableName="category" referencedColumnNames="id"/>
 
-        <addForeignKeyConstraint baseTableName="product"
-                                 baseColumnNames="id_category"
-                                 constraintName="product_fk_1"
-                                 referencedTableName="category"
-                                 referencedColumnNames="id"
-        />
+    <createTable tableName="category_aud">
+      <column name="id" type="BIGINT">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="category_aud_pk"/>
+      </column>
+      <column name="rev" type="bigint">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="category_aud_pk"
+          referencedTableName="revinfo" foreignKeyName="category_aud_revinfo"
+          referencedColumnNames="rev"/>
+      </column>
+      <column name="revtype" type="smallint"/>
+      <column name="external_id" type="UUID">
+        <constraints nullable="false"/>
+      </column>
+      <column name="id_parent_category" type="BIGINT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="name" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="active" type="BOOLEAN" defaultOnNull="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="version" type="INT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
 
-        <addForeignKeyConstraint baseTableName="product"
-                                 baseColumnNames="id_barcode_type"
-                                 constraintName="product_fk_2"
-                                 referencedTableName="barcode_type"
-                                 referencedColumnNames="id"
-        />
-    </changeSet>
+    <createTable tableName="barcode_type">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="barcode_type_pk"/>
+      </column>
+      <column name="external_id" type="UUID">
+        <constraints nullable="false" unique="true"
+          uniqueConstraintName="barcode_type_external_id_uq"/>
+      </column>
+      <column name="name" type="VARCHAR(200)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="barcode_type_name_uq"/>
+      </column>
+      <column name="active" type="BOOLEAN" defaultOnNull="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="version" type="INT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="barcode_type_aud">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="barcode_type_aud_pk"/>
+      </column>
+      <column name="rev" type="bigint">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="barcode_type_aud_pk"
+          referencedTableName="revinfo" foreignKeyName="category_aud_revinfo"
+          referencedColumnNames="rev"/>
+      </column>
+      <column name="revtype" type="smallint"/>
+      <column name="external_id" type="UUID">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="active" type="BOOLEAN" defaultOnNull="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="version" type="INT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="product">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="product_pk"/>
+      </column>
+      <column name="external_id" type="UUID">
+        <constraints nullable="false" unique="true" uniqueConstraintName="product_external_id_uq"/>
+      </column>
+      <column name="id_category" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="product_name_uq"/>
+      </column>
+      <column name="sku" type="VARCHAR(50)">
+        <constraints nullable="false" unique="true" uniqueConstraintName="product_sku_uq"/>
+      </column>
+      <column name="short_description" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="full_description" type="VARCHAR(2000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="id_barcode_type" type="BIGINT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="barcode" type="VARCHAR(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="active" type="BOOLEAN" defaultOnNull="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="version" type="INT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+
+    <createTable tableName="product_aud">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="product_aud_pk"/>
+      </column>
+      <column name="rev" type="bigint">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="product_aud_pk"
+          referencedTableName="revinfo" foreignKeyName="category_aud_revinfo"
+          referencedColumnNames="rev"/>
+      </column>
+      <column name="revtype" type="smallint"/>
+      <column name="external_id" type="UUID">
+        <constraints nullable="false"/>
+      </column>
+      <column name="id_category" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="sku" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="short_description" type="VARCHAR(200)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="full_description" type="VARCHAR(2000)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="id_barcode_type" type="BIGINT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="barcode" type="VARCHAR(255)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="active" type="BOOLEAN" defaultOnNull="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="version" type="INT">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="created_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_by" type="VARCHAR(2000)">
+        <constraints nullable="true"/>
+      </column>
+      <column name="last_modified_date" type="TIMESTAMP">
+        <constraints nullable="true"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint baseTableName="product" baseColumnNames="id_category"
+      constraintName="product_fk_1" referencedTableName="category" referencedColumnNames="id"/>
+
+    <addForeignKeyConstraint baseTableName="product" baseColumnNames="id_barcode_type"
+      constraintName="product_fk_2" referencedTableName="barcode_type" referencedColumnNames="id"/>
+  </changeSet>
 
 </databaseChangeLog>

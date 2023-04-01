@@ -13,6 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 @NamedEntityGraph(
     name = "BarcodeType.Products",
@@ -24,9 +26,11 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
+@Audited
+@AuditOverride(forClass = AuditableEntity.class)
 @Entity
 @Table(name = "barcode_type")
-public class BarcodeType extends BaseEntity<BarcodeType> {
+public class BarcodeType extends AuditableEntity<BarcodeType> {
 
   @Size(max = 200)
   @NotBlank

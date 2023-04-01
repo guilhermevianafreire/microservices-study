@@ -12,6 +12,13 @@ spring:
   jpa:
     open-in-view: false
     properties:
+      org:
+        hibernate:
+          envers:
+            audit_table_suffix: _aud
+            modified_flag_suffix: _mod
+            revision_field_name: rev
+            revision_type_field_name: revtype
       jakarta:
         persistence:
           sharedCache:
